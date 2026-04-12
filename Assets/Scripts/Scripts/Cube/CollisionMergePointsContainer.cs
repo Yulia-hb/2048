@@ -17,14 +17,11 @@ namespace ChainCube.Scripts.Cube
 
         private void OnPointsContainerCollision(PointsContainer col)
         {
-            if (col == null) return;
-
             if (col.points == _score.points)
             {
                 _score.points *= 2;
 
-                // ❗ ВАЖЛИВО
-                if (col.gameObject.scene.IsValid())
+                if (col != null && col.gameObject.scene.IsValid())
                 {
                     Destroy(col.gameObject);
                 }
