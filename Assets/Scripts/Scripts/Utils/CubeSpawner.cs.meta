@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: bd60f2a56871d8144a18abb47a92a71a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _cubePrefab: {instanceID: 0}
+  - _swipeDetectorObject: {fileID: 5450376507260708686, guid: edbe280d0d049cf43858625d30288bbd,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
