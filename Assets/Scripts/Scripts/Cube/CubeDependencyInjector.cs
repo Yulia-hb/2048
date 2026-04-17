@@ -10,7 +10,7 @@ public class CubeDependencyInjector : MonoBehaviour
         get => _cube;
         set
         {
-            // ❗ НЕ ПРИЙМАЄМО PREFAB
+           
             if (value == null || !value.scene.IsValid())
                 return;
 
