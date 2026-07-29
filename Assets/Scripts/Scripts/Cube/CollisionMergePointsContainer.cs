@@ -18,21 +18,30 @@ namespace ChainCube.Scripts.Cube
             Subscribe();
         }
 
+
         private void OnPointsContainerCollision(PointsContainer col)
         {
             if (col.points == _score.points)
             {
                 _score.points *= 2;
+
+                // Додаємо бонусний час
+                GameTimer.Instance.AddMergeTime(_score.points);
+
+                // Додаємо очки
                 _scoreManager?.AddScore(_score.points);
 
-             
+                // Звук об'єднання
+                SoundManager.Instance?.PlayMerge();
+
+                // Particle
                 if (_mergeEffect != null)
                 {
                     var effect = Instantiate(_mergeEffect, transform.position, Quaternion.identity);
                     Destroy(effect, 1f);
                 }
 
-                
+                // Тряска камери
                 var cam = Camera.main.GetComponent<CameraShake>();
 
                 if (cam != null)
@@ -40,7 +49,7 @@ namespace ChainCube.Scripts.Cube
                     StartCoroutine(cam.Shake(0.1f, 0.1f));
                 }
 
-               
+                // Видаляємо другий куб
                 if (col != null && col.gameObject.scene.IsValid())
                 {
                     Destroy(col.gameObject);
