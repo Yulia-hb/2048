@@ -7,6 +7,8 @@ public class ScoreManager : MonoBehaviour
 
     private long _score;
 
+    public long Score => _score;
+
     private void Start()
     {
         UpdateUI();
@@ -23,3 +25,4 @@ public class ScoreManager : MonoBehaviour
         _scoreText.text = _score.ToString();
     }
 }
+    
