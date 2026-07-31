@@ -9,18 +9,19 @@ public class GameTimer : MonoBehaviour
 
     [Header("Timer")]
     [SerializeField] private float _startTime = 45f;
-    [SerializeField] private float _continueTime = 30f;
+    [SerializeField] private float _bonusTime = 30f;
+    [SerializeField] private float _rewardAdTime = 60f;
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI _timerText;
-    [SerializeField] private GameObject _gameOverPanel;
-    [SerializeField] private TextMeshProUGUI _finalScoreText;
 
-    [Header("Managers")]
-    [SerializeField] private ScoreManager _scoreManager;
+    [Header("References")]
+    [SerializeField] private GameOverPanelView _gameOverPanelView;
 
     private float _currentTime;
+    private float _maxTime;
     private bool _isRunning;
+
     private Tween _timerPulseTween;
 
     private void Awake()
@@ -34,10 +35,8 @@ public class GameTimer : MonoBehaviour
     private void Start()
     {
         _currentTime = _startTime;
+        _maxTime = _startTime;
         _isRunning = true;
-
-        if (_gameOverPanel != null)
-            _gameOverPanel.SetActive(false);
 
         UpdateTimerUI();
     }
@@ -49,9 +48,9 @@ public class GameTimer : MonoBehaviour
 
         _currentTime -= Time.deltaTime;
 
-        if (_currentTime <= 0)
+        if (_currentTime <= 0f)
         {
-            _currentTime = 0;
+            _currentTime = 0f;
             UpdateTimerUI();
             GameOver();
             return;
@@ -60,30 +59,92 @@ public class GameTimer : MonoBehaviour
         UpdateTimerUI();
     }
 
+    /// <summary>
+    /// Додає звичайний час (Merge).
+    /// </summary>
     public void AddTime(float seconds)
     {
         if (!_isRunning)
             return;
 
         _currentTime += seconds;
+        _currentTime = Mathf.Min(_currentTime, _maxTime);
+
         UpdateTimerUI();
     }
 
+    /// <summary>
+    /// Додає час залежно від значення кубика.
+    /// </summary>
     public void AddMergeTime(long cubeValue)
     {
         float timeToAdd = cubeValue switch
         {
             4 => 0.5f,
-            8 => 1f,
-            16 => 1.5f,
-            32 => 2f,
-            64 => 3f,
-            128 => 4f,
-            256 => 5f,
+            8 => 0.5f,
+            16 => 1f,
+            32 => 1f,
+            64 => 1.5f,
+            128 => 1.5f,
+            256 => 2f,
+            512 => 2.5f,
+            1024 => 3,
+
             _ => 0f
         };
 
         AddTime(timeToAdd);
+    }
+
+    /// <summary>
+    /// Кнопка +30 секунд.
+    /// </summary>
+    public void AddThirtySeconds()
+    {
+        _maxTime = _bonusTime;
+        _currentTime = _bonusTime;
+
+        _isRunning = true;
+
+        _gameOverPanelView?.Hide();
+
+        Time.timeScale = 1f;
+
+        UpdateTimerUI();
+    }
+
+    /// <summary>
+    /// Продовжити після реклами (+60 секунд).
+    /// </summary>
+    public void ContinueAfterAd()
+    {
+        _maxTime = _rewardAdTime;
+        _currentTime = _rewardAdTime;
+
+        _isRunning = true;
+
+        _gameOverPanelView?.Hide();
+
+        Time.timeScale = 1f;
+
+        UpdateTimerUI();
+    }
+
+    private void GameOver()
+
+    {
+        Debug.Log("GameOver");
+        _isRunning = false;
+
+        if (_timerPulseTween != null)
+        {
+            _timerPulseTween.Kill();
+            _timerPulseTween = null;
+        }
+
+        Time.timeScale = 0f;
+
+        _gameOverPanelView?.Show();
     }
 
     private void UpdateTimerUI()
@@ -119,37 +180,5 @@ public class GameTimer : MonoBehaviour
 
             _timerText.transform.localScale = Vector3.one;
         }
-    }
-
-    private void GameOver()
-    {
-        _isRunning = false;
-
-        if (_finalScoreText != null && _scoreManager != null)
-            _finalScoreText.text = $"Your Score\n{_scoreManager.Score}";
-
-        if (_gameOverPanel != null)
-            _gameOverPanel.SetActive(true);
-
-        if (_timerPulseTween != null)
-        {
-            _timerPulseTween.Kill();
-            _timerPulseTween = null;
-        }
-
-        Time.timeScale = 0f;
-    }
-
-    public void ContinueGame()
-    {
-        _currentTime = _continueTime;
-
-        if (_gameOverPanel != null)
-            _gameOverPanel.SetActive(false);
-
-        Time.timeScale = 1f;
-        _isRunning = true;
-
-        UpdateTimerUI();
     }
 }
