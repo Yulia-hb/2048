@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cfff2bd36ccbced488859cb1725e93ae
+guid: 6aadab3a64c9fc541b0b404d7e8c9de5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LoadBunner_0
+      name: area
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 941
-        height: 1672
+        x: 255
+        y: 389
+        width: 1128
+        height: 312
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ee014ea04d7ac941ae0fa4ee19c89c3
-      internalID: -2043339563
+      spriteID: 58b7e451130fb454f9451fb8119731f4
+      internalID: 374967282
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: cfd5335d16fa5764b99d93ff9fcb2caa
+    spriteID: a957c37e19f6fc14e823eba6e1c15620
     internalID: 0
     vertices: []
     indices: 
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LoadBunner_0: -2043339563
+      area: 374967282
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

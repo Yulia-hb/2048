@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cfff2bd36ccbced488859cb1725e93ae
+guid: ea4017cd54572a148835e477211ad596
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LoadBunner_0
+      name: slider
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 941
-        height: 1672
+        x: 159
+        y: 278
+        width: 1258
+        height: 497
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ee014ea04d7ac941ae0fa4ee19c89c3
-      internalID: -2043339563
+      spriteID: c960c8677b53f034896fda2e1c250ab5
+      internalID: 1632281754
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: cfd5335d16fa5764b99d93ff9fcb2caa
+    spriteID: 5ec7e3de6d01db540a2169fd0609b5b9
     internalID: 0
     vertices: []
     indices: 
@@ -145,7 +145,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LoadBunner_0: -2043339563
+      slider: 1632281754
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
