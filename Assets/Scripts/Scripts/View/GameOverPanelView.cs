@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GameOverPanelView : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private TextMeshProUGUI _titleText;
+    [SerializeField] private Image _titleText;
     [SerializeField] private TextMeshProUGUI _finalScoreText;
 
     [Header("Buttons")]
