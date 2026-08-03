@@ -76,7 +76,7 @@ public class GameTimer : MonoBehaviour
     /// <summary>
     /// Додає час залежно від значення кубика.
     /// </summary>
-    public void AddMergeTime(long cubeValue)
+    public float AddMergeTime(long cubeValue)
     {
         float timeToAdd = cubeValue switch
         {
@@ -88,12 +88,14 @@ public class GameTimer : MonoBehaviour
             128 => 1.5f,
             256 => 2f,
             512 => 2.5f,
-            1024 => 3,
+            1024 => 3f,
 
             _ => 0f
         };
 
         AddTime(timeToAdd);
+
+        return timeToAdd;
     }
 
     /// <summary>

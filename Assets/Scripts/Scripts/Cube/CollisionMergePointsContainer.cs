@@ -26,7 +26,11 @@ namespace ChainCube.Scripts.Cube
                 _score.points *= 2;
 
                 // Додаємо бонусний час
-                GameTimer.Instance.AddMergeTime(_score.points);
+                float bonus = GameTimer.Instance.AddMergeTime(_score.points);
+
+                FloatingTextSpawner.Instance.Show(
+                    $"+{bonus:0.#}s",
+                    transform.position);
 
                 // Додаємо очки
                 _scoreManager?.AddScore(_score.points);
