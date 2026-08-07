@@ -39,6 +39,15 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    public void SetMusic(bool enabled)
+    {
+        _musicSource.mute = !enabled;
+    }
+
+    public void SetSfx(bool enabled)
+    {
+        _sfxSource.mute = !enabled;
+    }
     public void PlayMerge()
     {
         PlaySFX(_mergeClip);
