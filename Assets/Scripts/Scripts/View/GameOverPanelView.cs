@@ -11,6 +11,7 @@ public class GameOverPanelView : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button _addThirtySecondsButton;
     [SerializeField] private Button _continueAdButton;
+    [SerializeField] private Button _closeButton;
 
     [Header("Managers")]
     [SerializeField] private ScoreManager _scoreManager;
@@ -19,6 +20,7 @@ public class GameOverPanelView : MonoBehaviour
     {
         _addThirtySecondsButton.onClick.AddListener(OnAddThirtySecondsClicked);
         _continueAdButton.onClick.AddListener(OnContinueAfterAdClicked);
+        _closeButton.onClick.AddListener(OnCloseButton);
 
     }
 
@@ -26,6 +28,7 @@ public class GameOverPanelView : MonoBehaviour
     {
         _addThirtySecondsButton.onClick.RemoveListener(OnAddThirtySecondsClicked);
         _continueAdButton.onClick.RemoveListener(OnContinueAfterAdClicked);
+        _closeButton.onClick.RemoveListener(OnCloseButton);
     }
 
     public void Show()
@@ -54,5 +57,10 @@ public class GameOverPanelView : MonoBehaviour
         // Поки що без реклами.
         // Тут потім буде AdsManager.
         GameTimer.Instance.ContinueAfterAd();
+    }
+
+    private void OnCloseButton()
+    {
+        Hide();
     }
 }

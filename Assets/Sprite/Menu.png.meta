@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cfff2bd36ccbced488859cb1725e93ae
+guid: 5e403f1d6b16c26418c487d7459e3112
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -110,23 +110,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LoadBunner_0
+      name: menu_button
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 941
-        height: 1672
+        x: 574
+        y: 586
+        width: 439
+        height: 368
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ee014ea04d7ac941ae0fa4ee19c89c3
-      internalID: -2043339563
+      spriteID: 821056c92b9978749865569111ff50fb
+      internalID: -1830482386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: menu_sprite
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 106
+        width: 1149
+        height: 400
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2b39d608270eb4479e754e6502732f5
+      internalID: 73223805
       vertices: []
       indices: 
       edges: []
@@ -135,7 +157,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: cfd5335d16fa5764b99d93ff9fcb2caa
+    spriteID: 1eade7d44ce381e4c8dd5cc7c6d12f38
     internalID: 0
     vertices: []
     indices: 
@@ -145,7 +167,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LoadBunner_0: -2043339563
+      menu_button: -1830482386
+      menu_sprite: 73223805
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
