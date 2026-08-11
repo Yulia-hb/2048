@@ -12,12 +12,21 @@ namespace ChainCube.Scripts.Handlers
         [SerializeField, Range(0.5f, 1.5f)]
         private float _normalizedCoefficient = 1f;
 
-        private GameObject _movableObject;
+        private Rigidbody _movableRigidbody;
         private ISwipeDetector _swipeDetector;
 
         public void Inject(GameObject dependency)
         {
-            _movableObject = dependency;
+            if (dependency == null)
+            {
+                _movableRigidbody = null;
+                return;
+            }
+
+            _movableRigidbody = dependency.GetComponent<Rigidbody>();
+
+            if (_movableRigidbody == null)
+                Debug.LogError("Rigidbody is missing on movable cube.");
         }
 
         private void Start()
@@ -37,28 +46,37 @@ namespace ChainCube.Scripts.Handlers
 
         private void OnSwipe(Vector2 delta)
         {
-            if (_movableObject == null)
+            if (_movableRigidbody == null)
                 return;
 
             if (Mathf.Approximately(delta.x, 0f))
                 return;
 
-            float borderDistance = _rightBorder.position.x - _leftBorder.position.x;
-            float offset = borderDistance * _normalizedCoefficient * delta.x / Screen.width;
+            float borderDistance =
+                _rightBorder.position.x - _leftBorder.position.x;
 
-            Vector3 position = _movableObject.transform.position;
+            float offset =
+                borderDistance *
+                _normalizedCoefficient *
+                delta.x /
+                Screen.width;
+
+            Vector3 position = _movableRigidbody.position;
 
             position.x += offset;
-            position.x = Mathf.Clamp(position.x,
-                _leftBorder.position.x,
-                _rightBorder.position.x);
 
-            _movableObject.transform.position = position;
+            position.x = Mathf.Clamp(
+                position.x,
+                _leftBorder.position.x,
+                _rightBorder.position.x
+            );
+
+            _movableRigidbody.MovePosition(position);
         }
 
         private void OnSwipeEnd(Vector2 delta)
         {
-            _movableObject = null;
+            _movableRigidbody = null;
         }
 
         private void OnDestroy()

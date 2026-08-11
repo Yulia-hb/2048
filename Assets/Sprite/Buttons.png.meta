@@ -118,7 +118,7 @@ TextureImporter:
         width: 908
         height: 406
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -135,12 +135,12 @@ TextureImporter:
       name: Buttons_1
       rect:
         serializedVersion: 2
-        x: 44
-        y: 95
-        width: 941
-        height: 395
+        x: 58
+        y: 129
+        width: 908
+        height: 406
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
