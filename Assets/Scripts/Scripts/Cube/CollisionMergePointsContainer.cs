@@ -2,12 +2,15 @@
 
 namespace ChainCube.Scripts.Cube
 {
-    [RequireComponent(typeof(PointsContainerCollisionDetector), typeof (PointsContainer))]
+    [RequireComponent(typeof(PointsContainerCollisionDetector), typeof(PointsContainer))]
     public class CollisionMergePointsContainer : MonoBehaviour
     {
         private PointsContainer _score;
         private PointsContainerCollisionDetector _detector;
+
         [SerializeField] private GameObject _mergeEffect;
+        [SerializeField] private ChainCube.Scripts.Cube.CubePool _cubePool;
+
         private ScoreManager _scoreManager;
 
         private void Start()
@@ -15,33 +18,40 @@ namespace ChainCube.Scripts.Cube
             _score = GetComponent<PointsContainer>();
             _detector = GetComponent<PointsContainerCollisionDetector>();
             _scoreManager = FindObjectOfType<ScoreManager>();
+
             Subscribe();
         }
 
-
         private void OnPointsContainerCollision(PointsContainer col)
         {
+            if (col == null)
+                return;
+
             if (col.points == _score.points)
             {
                 _score.points *= 2;
 
-                // Додаємо бонусний час
+                // Бонусний час
                 float bonus = GameTimer.Instance.AddMergeTime(_score.points);
 
                 FloatingTextSpawner.Instance.Show(
                     $"+{bonus:0.#}s",
                     transform.position);
 
-                // Додаємо очки
+                // Очки
                 _scoreManager?.AddScore(_score.points);
 
-                // Звук об'єднання
+                // Звук
                 SoundManager.Instance?.PlayMerge();
 
                 // Particle
                 if (_mergeEffect != null)
                 {
-                    var effect = Instantiate(_mergeEffect, transform.position, Quaternion.identity);
+                    var effect = Instantiate(
+                        _mergeEffect,
+                        transform.position,
+                        Quaternion.identity);
+
                     Destroy(effect, 1f);
                 }
 
@@ -53,10 +63,12 @@ namespace ChainCube.Scripts.Cube
                     StartCoroutine(cam.Shake(0.1f, 0.1f));
                 }
 
-                // Видаляємо другий куб
-                if (col != null && col.gameObject.scene.IsValid())
+                // Повертаємо другий кубик у Pool
+                if (_cubePool != null &&
+                    col != null &&
+                    col.gameObject != null)
                 {
-                    Destroy(col.gameObject);
+                    _cubePool.Return(col.gameObject);
                 }
             }
         }
@@ -65,9 +77,12 @@ namespace ChainCube.Scripts.Cube
         {
             _detector.onCollisionContinue += OnPointsContainerCollision;
         }
-        
+
         private void Unsubscribe()
         {
+            if (_detector == null)
+                return;
+
             _detector.onCollisionContinue -= OnPointsContainerCollision;
         }
 

@@ -1,25 +1,29 @@
-﻿using System.Collections;
+﻿using ChainCube.Scripts.Cube;
+using System.Collections;
 using UnityEngine;
 
 namespace ChainCube.Scripts.Utils
 {
-    [RequireComponent(typeof(ISwipeDetector))] 
+    [RequireComponent(typeof(ISwipeDetector))]
     public class CubeSpawner : MonoBehaviour
     {
         [SerializeField] private float _spawnDelay = 0.3f;
-
-        [SerializeField] private GameObject _cubePrefab;
-
+        [SerializeField] private CubePool _cubePool;
         [SerializeField] private GameObject _swipeDetectorObject;
 
-
         private ISwipeDetector _swipeDetector;
-
         private Coroutine _spawnRoutine;
 
         private void Start()
         {
             _swipeDetector = _swipeDetectorObject.GetComponent<ISwipeDetector>();
+
+            if (_cubePool == null)
+            {
+                Debug.LogError("CubePool is not assigned!");
+                return;
+            }
+
             Subscribe();
         }
 
@@ -30,6 +34,9 @@ namespace ChainCube.Scripts.Utils
 
         private void Unsubscribe()
         {
+            if (_swipeDetector == null)
+                return;
+
             _swipeDetector.onSwipeEnd -= OnSwipeEnd;
         }
 
@@ -43,13 +50,10 @@ namespace ChainCube.Scripts.Utils
         {
             yield return new WaitForSeconds(_spawnDelay);
 
-            if (_cubePrefab == null || !_cubePrefab.scene.IsValid() && _cubePrefab.scene.name != null)
-            {
-                Debug.LogError("❌ INVALID PREFAB! Це об'єкт сцени, а не prefab!");
-                yield break;
-            }
-
-            var instance = Instantiate(_cubePrefab, transform.position, Quaternion.identity);
+            GameObject instance = _cubePool.Get(
+                transform.position,
+                Quaternion.identity
+            );
 
             InjectCube(instance);
 
@@ -58,7 +62,10 @@ namespace ChainCube.Scripts.Utils
 
         private void InjectCube(GameObject cube)
         {
-            var dependencies = FindObjectsByType<CubeDependencyInjector>(FindObjectsSortMode.None);
+            var dependencies =
+                FindObjectsByType<CubeDependencyInjector>(
+                    FindObjectsSortMode.None
+                );
 
             foreach (var dependency in dependencies)
             {
