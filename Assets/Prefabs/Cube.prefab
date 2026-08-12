@@ -1197,6 +1197,10 @@ MonoBehaviour:
     material: {fileID: 2100000, guid: 6f10e68271adb514c835ac7801a36c34, type: 2}
   - points: 512
     material: {fileID: 2100000, guid: 6c0a138e8e56e5e46ad675766d502970, type: 2}
+  - points: 1024
+    material: {fileID: 2100000, guid: a0c0086ef7f725e4496efbde1fc289fe, type: 2}
+  - points: 2048
+    material: {fileID: 2100000, guid: b758509ea4da94745a4a6bf855439a49, type: 2}
 --- !u!114 &177014792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1249,6 +1253,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mergeEffect: {fileID: 5198178225311121864, guid: 4c17d71b0d0407f4293b4fc431cfd767,
+    type: 3}
+  _cubePool: {fileID: 2583527768665455366, guid: cc62ea2cc262a4042a779ff7cc2524a7,
     type: 3}
 --- !u!114 &5613481606775358617
 MonoBehaviour:
