@@ -18,6 +18,8 @@ public class SoundManager : MonoBehaviour
     [Header("Music")]
     [SerializeField] private AudioClip _backgroundMusic;
 
+    private bool _vibrationEnabled = true;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -48,6 +50,22 @@ public class SoundManager : MonoBehaviour
     {
         _sfxSource.mute = !enabled;
     }
+
+    public void SetVibration(bool enabled)
+    {
+        _vibrationEnabled = enabled;
+    }
+
+    public void Vibrate()
+    {
+        if (!_vibrationEnabled)
+            return;
+
+#if UNITY_ANDROID || UNITY_IOS
+        Handheld.Vibrate();
+#endif
+    }
+
     public void PlayMerge()
     {
         PlaySFX(_mergeClip);

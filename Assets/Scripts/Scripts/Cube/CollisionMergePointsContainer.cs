@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using ChainCube.Scripts.Rewards;
 
 namespace ChainCube.Scripts.Cube
 {
@@ -9,15 +10,18 @@ namespace ChainCube.Scripts.Cube
         private PointsContainerCollisionDetector _detector;
 
         [SerializeField] private GameObject _mergeEffect;
-        [SerializeField] private ChainCube.Scripts.Cube.CubePool _cubePool;
+        [SerializeField] private CubePool _cubePool;
 
         private ScoreManager _scoreManager;
+        private RewardSystem _rewardSystem;
 
         private void Start()
         {
             _score = GetComponent<PointsContainer>();
             _detector = GetComponent<PointsContainerCollisionDetector>();
+
             _scoreManager = FindObjectOfType<ScoreManager>();
+            _rewardSystem = FindObjectOfType<RewardSystem>();
 
             Subscribe();
         }
@@ -30,6 +34,11 @@ namespace ChainCube.Scripts.Cube
             if (col.points == _score.points)
             {
                 _score.points *= 2;
+
+                // Reward
+                _rewardSystem?.CheckReward(
+                    RewardTrigger.ReachValue,
+                    _score.points);
 
                 // Бонусний час
                 float bonus = GameTimer.Instance.AddMergeTime(_score.points);
