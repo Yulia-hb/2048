@@ -39,10 +39,15 @@ namespace ChainCube.Scripts.Handlers
             if (_movableRigidbody == null)
                 return;
 
-            _movableRigidbody.AddForce(_movableRigidbody.transform.forward * _force, ForceMode.Impulse);
+            _movableRigidbody.AddForce(
+                _movableRigidbody.transform.forward * _force,
+                ForceMode.Impulse
+            );
+
+            SoundManager.Instance?.Vibrate();
+
             _movableRigidbody = null;
         }
-
         private void OnDestroy()
         {
             Unsubscribe(); ;

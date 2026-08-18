@@ -89,6 +89,7 @@ public class GameTimer : MonoBehaviour
             256 => 2f,
             512 => 2.5f,
             1024 => 3f,
+            2048 => 3.5f,
 
             _ => 0f
         };
