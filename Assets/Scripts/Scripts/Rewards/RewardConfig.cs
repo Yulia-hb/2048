@@ -8,7 +8,8 @@ namespace ChainCube.Scripts.Rewards
     public enum RewardTrigger
     {
         Merge,
-        ReachValue
+        ReachValue,
+        NewRecord
     }
 
     [Serializable]

@@ -9,7 +9,7 @@ namespace ChainCube.Scripts.Rewards
         [SerializeField] private ScoreManager _scoreManager;
         [SerializeField] private List<RewardConfig> _rewardConfigs = new();
 
-        public void CheckReward(RewardTrigger trigger, long value)
+        public RewardConfig CheckReward(RewardTrigger trigger, long value)
         {
             foreach (RewardConfig rewardConfig in _rewardConfigs)
             {
@@ -23,7 +23,11 @@ namespace ChainCube.Scripts.Rewards
                     continue;
 
                 GiveReward(rewardConfig);
+
+                return rewardConfig;
             }
+
+            return null;
         }
 
         private void GiveReward(RewardConfig rewardConfig)

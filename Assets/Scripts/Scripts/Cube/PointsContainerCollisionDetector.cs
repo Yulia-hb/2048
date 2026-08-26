@@ -14,7 +14,11 @@ namespace ChainCube.Scripts.Cube
 
             if (colContainer == null)
                 return;
-            
+            Debug.Log(
+         $"COLLISION: {name} ({GetComponent<PointsContainer>().points}) " +
+         $"hit {col.gameObject.name} ({colContainer.points})");
+
+
             onCollisionStart?.Invoke(colContainer);
             onCollisionContinue?.Invoke(colContainer);
         }

@@ -14,6 +14,7 @@ namespace ChainCube.Scripts.Cube
 
         private ScoreManager _scoreManager;
         private RewardSystem _rewardSystem;
+        private MergeChainTracker _mergeChainTracker;
 
         private void Start()
         {
@@ -22,6 +23,7 @@ namespace ChainCube.Scripts.Cube
 
             _scoreManager = FindObjectOfType<ScoreManager>();
             _rewardSystem = FindObjectOfType<RewardSystem>();
+            _mergeChainTracker = FindObjectOfType<MergeChainTracker>();
 
             Subscribe();
         }
@@ -33,9 +35,14 @@ namespace ChainCube.Scripts.Cube
 
             if (col.points == _score.points)
             {
+                // Куб, який летів, залишається.
+                // Його значення збільшується.
                 _score.points *= 2;
 
-                // Reward
+                // Merge Chain
+                _mergeChainTracker?.RegisterMerge();
+
+                // Reward за досягнення значення кубика
                 _rewardSystem?.CheckReward(
                     RewardTrigger.ReachValue,
                     _score.points);
@@ -72,12 +79,15 @@ namespace ChainCube.Scripts.Cube
                     StartCoroutine(cam.Shake(0.1f, 0.1f));
                 }
 
-                // Повертаємо другий кубик у Pool
-                if (_cubePool != null &&
-                    col != null &&
-                    col.gameObject != null)
+                // Другий кубик ПОВНІСТЮ прибираємо зі сцени
+                if (col.gameObject != null)
                 {
-                    _cubePool.Return(col.gameObject);
+                    col.gameObject.SetActive(false);
+
+                    if (_cubePool != null)
+                    {
+                        _cubePool.Return(col.gameObject);
+                    }
                 }
             }
         }
