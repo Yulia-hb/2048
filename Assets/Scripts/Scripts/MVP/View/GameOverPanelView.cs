@@ -15,13 +15,13 @@ public class GameOverPanelView : MonoBehaviour
 
     [Header("Managers")]
     [SerializeField] private ScoreManager _scoreManager;
+    [SerializeField] private GameFlowManager _gameFlowManager;
 
     private void Awake()
     {
         _addThirtySecondsButton.onClick.AddListener(OnAddThirtySecondsClicked);
         _continueAdButton.onClick.AddListener(OnContinueAfterAdClicked);
         _closeButton.onClick.AddListener(OnCloseButton);
-
     }
 
     private void OnDestroy()
@@ -33,8 +33,7 @@ public class GameOverPanelView : MonoBehaviour
 
     public void Show()
     {
-        Debug.Log("Show Panel");     
-        _finalScoreText.text = $" Your Score\n{_scoreManager.Score}";
+        _finalScoreText.text = $"Your Score\n{_scoreManager.Score}";
 
         gameObject.SetActive(true);
     }
@@ -47,6 +46,7 @@ public class GameOverPanelView : MonoBehaviour
     private void OnAddThirtySecondsClicked()
     {
         Hide();
+
         GameTimer.Instance.AddThirtySeconds();
     }
 
@@ -61,6 +61,8 @@ public class GameOverPanelView : MonoBehaviour
 
     private void OnCloseButton()
     {
+        _gameFlowManager?.FinishRun();
+
         Hide();
     }
 }
