@@ -43,6 +43,7 @@ namespace ChainCube.Scripts.Rewards
             return true;
         }
 
+
         public long GetAmount(CurrencyType type)
         {
             return type switch

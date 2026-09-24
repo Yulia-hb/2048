@@ -116,6 +116,7 @@ public class GameTimer : MonoBehaviour
         UpdateTimerUI();
     }
 
+   
     /// <summary>
     /// Продовжити після реклами (+60 секунд).
     /// </summary>

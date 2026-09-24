@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ChainCube.Scripts.Utils
 {
@@ -19,7 +18,7 @@ namespace ChainCube.Scripts.Utils
 #if UNITY_EDITOR
             HandleMouse();
 #else
-        HandleTouch();
+            HandleTouch();
 #endif
         }
 
@@ -34,6 +33,15 @@ namespace ChainCube.Scripts.Utils
             {
                 case TouchPhase.Began:
 
+                    // Якщо палець натиснув на UI —
+                    // gameplay swipe взагалі не запускаємо.
+                    if (EventSystem.current != null &&
+                        EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                    {
+                        _isSwipe = false;
+                        return;
+                    }
+
                     _isSwipe = true;
 
                     onSwipeStart?.Invoke(Vector2.zero);
@@ -45,7 +53,6 @@ namespace ChainCube.Scripts.Utils
                     if (!_isSwipe)
                         return;
 
-                    // Unity сама дає зміщення пальця
                     Vector2 delta = touch.deltaPosition;
 
                     onSwipe?.Invoke(delta);
@@ -70,6 +77,15 @@ namespace ChainCube.Scripts.Utils
         {
             if (Input.GetMouseButtonDown(0))
             {
+                // Якщо клік почався на UI —
+                // gameplay swipe не запускаємо.
+                if (EventSystem.current != null &&
+                    EventSystem.current.IsPointerOverGameObject())
+                {
+                    _isSwipe = false;
+                    return;
+                }
+
                 _isSwipe = true;
                 _lastMousePosition = Input.mousePosition;
 
@@ -82,7 +98,8 @@ namespace ChainCube.Scripts.Utils
                     return;
 
                 Vector2 currentPosition = Input.mousePosition;
-                Vector2 delta = currentPosition - _lastMousePosition;
+                Vector2 delta =
+                    currentPosition - _lastMousePosition;
 
                 onSwipe?.Invoke(delta);
 

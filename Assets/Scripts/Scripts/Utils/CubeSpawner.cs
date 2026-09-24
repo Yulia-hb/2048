@@ -16,11 +16,18 @@ namespace ChainCube.Scripts.Utils
 
         private void Start()
         {
-            _swipeDetector = _swipeDetectorObject.GetComponent<ISwipeDetector>();
+            _swipeDetector =
+                _swipeDetectorObject.GetComponent<ISwipeDetector>();
 
             if (_cubePool == null)
             {
                 Debug.LogError("CubePool is not assigned!");
+                return;
+            }
+
+            if (_swipeDetector == null)
+            {
+                Debug.LogError("SwipeDetector is not found!");
                 return;
             }
 
@@ -42,22 +49,37 @@ namespace ChainCube.Scripts.Utils
 
         private void OnSwipeEnd(Vector2 delta)
         {
-            if (_spawnRoutine == null)
-                _spawnRoutine = StartCoroutine(SpawnWithDelay());
+            if (_spawnRoutine != null)
+                return;
+
+            _spawnRoutine =
+                StartCoroutine(SpawnWithDelay());
         }
 
         private IEnumerator SpawnWithDelay()
         {
             yield return new WaitForSeconds(_spawnDelay);
 
-            GameObject instance = _cubePool.Get(
-                transform.position,
-                Quaternion.identity
-            );
-
-            InjectCube(instance);
+            SpawnCube();
 
             _spawnRoutine = null;
+        }
+
+        private void SpawnCube()
+        {
+            GameObject instance =
+                _cubePool.Get(
+                    transform.position,
+                    Quaternion.identity
+                );
+
+            RandomPointsGenerator generator =
+                instance.GetComponent<RandomPointsGenerator>();
+
+            if (generator != null)
+                generator.Generate();
+
+            InjectCube(instance);
         }
 
         private void InjectCube(GameObject cube)
