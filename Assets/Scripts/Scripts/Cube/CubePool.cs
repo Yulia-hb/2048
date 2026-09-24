@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using ChainCube.Scripts.Cube;
 
 namespace ChainCube.Scripts.Cube
 {
@@ -9,7 +8,8 @@ namespace ChainCube.Scripts.Cube
         [SerializeField] private GameObject _cubePrefab;
         [SerializeField] private Transform _poolContainer;
 
-        private readonly Queue<GameObject> _pool = new Queue<GameObject>();
+        private readonly Queue<GameObject> _pool =
+            new Queue<GameObject>();
 
         public GameObject Get(Vector3 position, Quaternion rotation)
         {
@@ -21,12 +21,19 @@ namespace ChainCube.Scripts.Cube
             }
             else
             {
-                cube = Instantiate(_cubePrefab, _poolContainer);
+                cube = Instantiate(
+                    _cubePrefab,
+                    _poolContainer
+                );
             }
 
             ResetCube(cube);
 
-            cube.transform.SetPositionAndRotation(position, rotation);
+            cube.transform.SetPositionAndRotation(
+                position,
+                rotation
+            );
+
             cube.SetActive(true);
 
             return cube;

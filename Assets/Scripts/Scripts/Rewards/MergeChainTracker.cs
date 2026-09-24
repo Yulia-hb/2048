@@ -28,6 +28,12 @@ namespace ChainCube.Scripts.Rewards
             _mergeCount = 0;
         }
 
+        public void ResetChain()
+        {
+            _mergeCount = 0;
+        }
+
+
         public void RegisterMerge()
         {
             _mergeCount++;

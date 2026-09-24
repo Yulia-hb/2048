@@ -17,5 +17,5 @@ MonoBehaviour:
   _rewards:
   - _currency: 1
     _amount: 3
-  - _currency: 1
-    _amount: 400
+  - _currency: 0
+    _amount: 100

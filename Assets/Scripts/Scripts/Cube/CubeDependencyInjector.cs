@@ -5,38 +5,43 @@ public class CubeDependencyInjector : MonoBehaviour
 {
     [SerializeField] private GameObject _cube;
 
+    private IDependency<GameObject>[] _dependencies;
+
     public GameObject Cube
     {
         get => _cube;
+
         set
         {
-           
             if (value == null || !value.scene.IsValid())
                 return;
 
-            if (_cube == value)
-                return;
-
             _cube = value;
+
             Inject();
         }
     }
-    private IDependency<GameObject>[] _dependencies;
+
+    private void Awake()
+    {
+        _dependencies = GetComponents<IDependency<GameObject>>();
+    }
 
     private void Start()
     {
-        _dependencies = GetComponents<IDependency<GameObject>>();
-
         if (_cube != null)
             Inject();
     }
 
     private void Inject()
     {
+        if (_dependencies == null)
+            _dependencies = GetComponents<IDependency<GameObject>>();
+
         foreach (var dependency in _dependencies)
         {
-            dependency.Inject(Cube);
+            if (dependency != null)
+                dependency.Inject(_cube);
         }
     }
 }
-

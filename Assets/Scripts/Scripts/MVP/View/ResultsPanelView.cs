@@ -12,7 +12,8 @@ public class ResultsPanelView : MonoBehaviour
     [Header("New Record")]
     [SerializeField] private GameObject _newRecordContainer;
     [SerializeField] private TextMeshProUGUI _newRecordText;
-    [SerializeField] private TextMeshProUGUI _rewardsText;
+    [SerializeField] private TextMeshProUGUI _gemsRewardText;
+    [SerializeField] private TextMeshProUGUI _coinsRewardText;
 
     [Header("Buttons")]
     [SerializeField] private Button _newRunButton;
@@ -36,8 +37,8 @@ public class ResultsPanelView : MonoBehaviour
         long bestScore,
         RewardConfig newRecordReward)
     {
-        _scoreText.text = $"Your Score\n{score}";
-        _bestScoreText.text = $"Best Score\n{bestScore}";
+        _scoreText.text = $"YOUR SCORE: {score}";
+        _bestScoreText.text = $"BEST SCORE: {bestScore}";
 
         bool isNewRecord = newRecordReward != null;
 
@@ -45,8 +46,9 @@ public class ResultsPanelView : MonoBehaviour
 
         if (isNewRecord)
         {
-            _newRecordText.text = "New Record!";
-            _rewardsText.text = BuildRewardText(newRecordReward);
+            _newRecordText.text = "NEW RECORD!";
+
+            ShowRewards(newRecordReward);
         }
 
         gameObject.SetActive(true);
@@ -57,31 +59,29 @@ public class ResultsPanelView : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private string BuildRewardText(RewardConfig rewardConfig)
+    private void ShowRewards(RewardConfig rewardConfig)
     {
-        string text = "";
+        _gemsRewardText.text = "";
+        _coinsRewardText.text = "";
 
         foreach (Reward reward in rewardConfig.Rewards)
         {
-            string currencyName = reward.Currency switch
+            switch (reward.Currency)
             {
-                CurrencyType.Gems => "Gems",
-                CurrencyType.Coins => "Coins",
-                _ => reward.Currency.ToString()
-            };
+                case CurrencyType.Gems:
+                    _gemsRewardText.text = $"GEMS: +{reward.Amount}";
+                    break;
 
-            if (!string.IsNullOrEmpty(text))
-                text += "\n";
-
-            text += $"+{reward.Amount} {currencyName}";
+                case CurrencyType.Coins:
+                    _coinsRewardText.text = $"COINS: +{reward.Amount}";
+                    break;
+            }
         }
-
-        return text;
     }
 
     private void OnNewRunClicked()
     {
-        Hide();
+        //Hide();
 
         _gameFlowManager?.StartNewRun();
     }
