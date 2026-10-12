@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ChainCube.Scripts.Rewards;
+using ChainCube.Scripts.Leaderboard;
 
 public class ResultsPanelView : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class ResultsPanelView : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button _newRunButton;
 
+    [Header("Leaderboard")]
+    [SerializeField] private Button _leaderboardButton;
+    [SerializeField] private LeaderboardManager _leaderboardManager;
+
     private GameFlowManager _gameFlowManager;
 
     private void Awake()
@@ -25,11 +30,13 @@ public class ResultsPanelView : MonoBehaviour
         _gameFlowManager = FindObjectOfType<GameFlowManager>();
 
         _newRunButton.onClick.AddListener(OnNewRunClicked);
+        _leaderboardButton.onClick.AddListener(OnLeaderboardClicked);
     }
 
     private void OnDestroy()
     {
         _newRunButton.onClick.RemoveListener(OnNewRunClicked);
+        _leaderboardButton.onClick.RemoveListener(OnLeaderboardClicked);
     }
 
     public void Show(
@@ -84,5 +91,10 @@ public class ResultsPanelView : MonoBehaviour
         //Hide();
 
         _gameFlowManager?.StartNewRun();
+    }
+
+    private void OnLeaderboardClicked()
+    {
+        _leaderboardManager?.OpenLeaderboard();
     }
 }
