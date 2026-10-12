@@ -20,6 +20,9 @@ namespace ChainCube.Scripts.Leaderboard
         [Header("Buttons")]
         [SerializeField] private Button _closeButton;
 
+        [Header("HUD")]
+        [SerializeField] private GameObject _globalHUD;
+
         private readonly List<LeaderboardEntryView>
             _spawnedEntries = new();
 
@@ -53,7 +56,7 @@ namespace ChainCube.Scripts.Leaderboard
             }
 
             ShowMyPlayer(myEntry);
-
+            _globalHUD?.SetActive(false);
             gameObject.SetActive(true);
         }
 
@@ -95,6 +98,7 @@ namespace ChainCube.Scripts.Leaderboard
         public void Hide()
         {
             gameObject.SetActive(false);
+            _globalHUD?.SetActive(true);
         }
 
         private void OnDestroy()
