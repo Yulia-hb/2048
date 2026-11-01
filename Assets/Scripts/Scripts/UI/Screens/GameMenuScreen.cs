@@ -11,7 +11,6 @@ public class GameMenuScreen : MonoBehaviour
     [SerializeField] private Button _musicButton;
     [SerializeField] private Button _soundButton;
     [SerializeField] private Button _vibrationButton;
-    [SerializeField] private Button _shopButton;
 
     [Header("Music")]
     [SerializeField] private Sprite _musicOnSprite;
@@ -28,35 +27,27 @@ public class GameMenuScreen : MonoBehaviour
     [SerializeField] private Sprite _vibrationOffSprite;
     [SerializeField] private TMP_Text _vibrationText;
 
-    [Header("Shop")]
-    [SerializeField] private Sprite _shopOnSprite;
-    [SerializeField] private TMP_Text _shopText;
-
     [SerializeField] private SoundManager _soundManager;
 
     private bool _musicEnabled = true;
     private bool _soundEnabled = true;
     private bool _vibrationEnabled = true;
-    private bool _shopEnabled = true;
 
     private Image _musicImage;
     private Image _soundImage;
     private Image _vibrationImage;
-    private Image _shopImage;
 
     private void Awake()
     {
         _musicImage = _musicButton.GetComponent<Image>();
         _soundImage = _soundButton.GetComponent<Image>();
         _vibrationImage = _vibrationButton.GetComponent<Image>();
-        _shopImage = _shopButton.GetComponent<Image>();
 
         _closeButton.onClick.AddListener(Close);
 
         _musicButton.onClick.AddListener(ToggleMusic);
         _soundButton.onClick.AddListener(ToggleSound);
         _vibrationButton.onClick.AddListener(ToggleVibration);
-        _shopButton.onClick.AddListener(ToggleShop);
 
         RefreshUI();
     }
@@ -82,14 +73,6 @@ public class GameMenuScreen : MonoBehaviour
         RefreshUI();
     }
 
-    private void ToggleShop()
-    {
-        _shopEnabled = !_shopEnabled;
-
-        RefreshUI();
-    }
-
-
     private void ToggleSound()
     {
         _soundEnabled = !_soundEnabled;
@@ -111,6 +94,7 @@ public class GameMenuScreen : MonoBehaviour
         _musicImage.sprite = _musicEnabled ? _musicOnSprite : _musicOffSprite;
         _soundImage.sprite = _soundEnabled ? _soundOnSprite : _soundOffSprite;
         _vibrationImage.sprite = _vibrationEnabled ? _vibrationOnSprite : _vibrationOffSprite;
+
        
     }
 }
